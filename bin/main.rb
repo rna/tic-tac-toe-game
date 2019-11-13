@@ -7,7 +7,7 @@ active_player = 1
 
 counter = 0
 
-while counter
+while counter < 9
   if active_player.odd?
     puts "Player-#{active_player}: Please enter box number:-"
     box = gets.chomp.to_i
@@ -37,6 +37,15 @@ while counter
       puts ' '
     end
     puts '----------------'
+
+    # Checking the game winning status
+    # Horizontal Win check
+    board.each do |sub|
+      if sub.all? { |e| e == 'X' }
+        puts 'Player 1 wins'
+        exit
+      end
+    end
   end
 
   next unless active_player.even?
@@ -69,4 +78,15 @@ while counter
     puts ' '
   end
   puts '----------------'
+
+  # Checking the game winning status
+  # Horizontal Win check
+  board.each do |sub|
+    if sub.all? { |e| e == 'O' }
+      puts 'Player 2 wins'
+      exit
+    end
+  end
 end
+
+puts 'Game is drawn'
