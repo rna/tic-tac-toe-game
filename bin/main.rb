@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require_relative "../lib/logic"
+
+$game = Game.new
+
+$game.start
+
 def display_board(board)
   puts '----------------'
   board.each do |sub|
@@ -20,7 +26,7 @@ def play_again
 
   case choice
     when 1
-      game
+      $game.start
     when 2
       exit
     else
@@ -28,65 +34,28 @@ def play_again
   end
 end
 
-def game
-  board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
-  active_player = 1
-  # result = false
+while $game.game_on
 
-  counter = 0
-  game_on = true
+  display_board($game.board)
+  puts "Player-#{$game.active_player}: Please enter box number:-"
+  box = gets.chomp.to_i
+  $game.receive_inputs(box)
+  $game.check_status
 
-  while game_on
+  if $game.condition[:status] == 'win'
+    display_board($game.board)
+    puts "Player #{$game.condition[:player]} wins"
+    play_again
+  elsif $game.condition[:status] == 'draw'
+    display_board($game.board)
+    puts 'Game is drawn'
+    play_again
+  end
+  puts '----------------'
 
-    display_board(board)
-    puts "Player-#{active_player}: Please enter box number:-"
-    box = gets.chomp.to_i
-    arr = if box > 6
-            2
-          elsif box > 3
-            1
-          else
-            0
-          end
-
-    if (box == 1) || (box == 4) || (box == 7)
-      cell = 0
-    elsif (box == 2) || (box == 5) || (box == 8)
-      cell = 1
-    elsif (box == 3) || (box == 6) || (box == 9)
-      cell = 2
-    end
-    board[arr][cell] = active_player.even? ? 'O' : 'X'
-    counter += 1  
-    
-    # Checking the game winning status
-    # Horizontal Win check
-
-    board.each_with_index do |sub, i|
-      if sub.all? { |e| e == 'O' }
-        display_board(board)
-        game_on = false
-        puts 'Player 2 wins'
-        play_again
-        break
-      elsif sub.all? { |e| e == 'X' }
-        display_board(board)
-        game_on = false
-        puts 'Player 1 wins'
-        play_again
-        break
-      elsif counter >= 9
-        display_board(board)
-        game_on = false
-        puts 'Game is drawn'
-        play_again
-        break
-      end
-    end
-    puts '----------------'
-
-    active_player += 1
+  if $game.active_player.even?
+    $game.active_player -= 1
+  else
+    $game.active_player += 1
   end
 end
-
-game
