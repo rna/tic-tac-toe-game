@@ -37,7 +37,7 @@ def game
   game_on = true
 
   while game_on
-    
+
     display_board(board)
     puts "Player-#{active_player}: Please enter box number:-"
     box = gets.chomp.to_i
@@ -85,11 +85,7 @@ def game
     end
     puts '----------------'
 
-    if active_player.even?
-      active_player -= 1
-    else
-      active_player += 1
-    end
+    active_player += 1
   end
 end
 
