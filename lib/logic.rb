@@ -49,12 +49,16 @@ class Game
     end
   end
 
-  def winning_board
-    horizontal = [[@board[0][0], @board[1][0], @board[2][0]], [@board[0][1], @board[1][1], @board[2][1]], [@board[0][2], @board[1][2], @board[2][2]]]
-  end
-
   def check_status
-    @board.each do |sub|
+    winning_board = [[@board[0][0], @board[0][1], @board[0][2]],
+    [@board[1][0], @board[1][1], @board[1][2]],
+    [@board[2][0], @board[2][1], @board[2][2]],
+    [@board[0][0], @board[1][0], @board[2][0]],
+    [@board[0][1], @board[1][1], @board[2][1]],
+    [@board[0][2], @board[1][2], @board[2][2]],
+    [@board[0][0], @board[1][1], @board[2][2]],
+    [@board[0][2], @board[1][1], @board[2][0]]]
+    winning_board.each do |sub|
       if sub.all? { |e| e == 'O' }
         @game_on = false
         @condition = { status: 'win', player: 2 }
