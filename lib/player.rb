@@ -39,6 +39,10 @@ class Player < Game
     end
   end
 
+  def winning_board
+    super()
+  end
+
   def check_status
     super()
   end

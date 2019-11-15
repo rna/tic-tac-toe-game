@@ -36,18 +36,23 @@ def display_board(board)
 end
 
 def play_again(player)
-  puts 'Would you like to start again?'
-  puts '1. Yes'
-  puts '2. No'
-  choice = gets.chomp.to_i
+  option = true
+  while option
+    puts 'Would you like to start again?'
+    puts '1. Yes'
+    puts '2. No'
+    choice = gets.chomp.to_i
 
-  case choice
-  when 1
-    player.start
-  when 2
-    exit
-  else
-    puts 'Please enter a valid choice'
+    case choice
+    when 1
+      option = false
+      player.start
+    when 2
+      option = false
+      exit
+    else
+      puts 'Please enter a valid choice'
+    end
   end
 end
 

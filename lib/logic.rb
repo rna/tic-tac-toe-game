@@ -50,7 +50,7 @@ class Game
     end
   end
 
-  def check_status
+  def winning_board
     winning_board = [[@board[0][0], @board[0][1], @board[0][2]],
                      [@board[1][0], @board[1][1], @board[1][2]],
                      [@board[2][0], @board[2][1], @board[2][2]],
@@ -59,6 +59,9 @@ class Game
                      [@board[0][2], @board[1][2], @board[2][2]],
                      [@board[0][0], @board[1][1], @board[2][2]],
                      [@board[0][2], @board[1][1], @board[2][0]]]
+  end
+
+  def check_status
     winning_board.each do |sub|
       if sub.all? { |e| e == 'O' }
         @game_on = false
@@ -68,7 +71,7 @@ class Game
         @game_on = false
         @condition = { status: 'win', player: 1 }
         break
-      elsif @counter > 9
+      elsif @counter >= 9
         @game_on = false
         @condition = { status: 'draw', player: 0 }
         break
