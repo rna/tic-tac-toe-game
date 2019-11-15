@@ -1,6 +1,29 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require_relative '../lib/player'
+
+puts 'Welcome to a game of Tic-Tac-Toe!'
+
+puts "Enter Player 1's name"
+player1 = gets.chomp
+
+while player1.nil? || player1.empty?
+  puts 'Please enter your name'
+  player1 = gets.chomp
+end
+
+puts "Enter Player 2's name"
+player2 = gets.chomp
+
+while player2.nil? || player2.empty?
+  puts 'Please enter your name'
+  player2 = gets.chomp
+end
+
+player = Player.new(player1, player2)
+player.start
+
 def display_board(board)
   puts '----------------'
   board.each do |sub|
@@ -12,85 +35,48 @@ def display_board(board)
   puts '----------------'
 end
 
-def play_again
-  puts "Would you like to start again?"
-  puts "1. Yes"
-  puts "2. No"
-  choice = gets.chomp.to_i
+def play_again(player)
+  option = true
+  while option
+    puts 'Would you like to start again?'
+    puts '1. Yes'
+    puts '2. No'
+    choice = gets.chomp.to_i
 
-  case choice
+    case choice
     when 1
-      game
+      option = false
+      player.start
     when 2
+      option = false
       exit
     else
-      puts "Please enter a valid choice"
+      puts 'Please enter a valid choice'
+    end
   end
 end
 
-def game
-  board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
-  active_player = 1
-  # result = false
+while player.game_on
+  display_board(player.board)
+  puts "#{player.display_name}: Please enter box number:-"
+  box = gets.chomp.to_i
 
-  counter = 0
-  game_on = true
-
-  while game_on
-    
-    display_board(board)
-    puts "Player-#{active_player}: Please enter box number:-"
+  while player.check_input(box)
+    puts "#{player.display_name}: Only enter a number from 1-9:-"
     box = gets.chomp.to_i
-    arr = if box > 6
-            2
-          elsif box > 3
-            1
-          else
-            0
-          end
-
-    if (box == 1) || (box == 4) || (box == 7)
-      cell = 0
-    elsif (box == 2) || (box == 5) || (box == 8)
-      cell = 1
-    elsif (box == 3) || (box == 6) || (box == 9)
-      cell = 2
-    end
-    board[arr][cell] = active_player.even? ? 'O' : 'X'
-    counter += 1  
-    
-    # Checking the game winning status
-    # Horizontal Win check
-
-    board.each_with_index do |sub, i|
-      if sub.all? { |e| e == 'O' }
-        display_board(board)
-        game_on = false
-        puts 'Player 2 wins'
-        play_again
-        break
-      elsif sub.all? { |e| e == 'X' }
-        display_board(board)
-        game_on = false
-        puts 'Player 1 wins'
-        play_again
-        break
-      elsif counter >= 9
-        display_board(board)
-        game_on = false
-        puts 'Game is drawn'
-        play_again
-        break
-      end
-    end
-    puts '----------------'
-
-    if active_player.even?
-      active_player -= 1
-    else
-      active_player += 1
-    end
   end
-end
 
-game
+  while player.receive_inputs(box)
+    puts "#{player.display_name}: Only choose an empty box:-"
+    box = gets.chomp.to_i
+  end
+  player.check_status
+
+  if player.condition[:status] == 'win' || player.condition[:status] == 'draw'
+    display_board(player.board)
+    puts(player.message)
+    play_again(player)
+  end
+
+  player.switch_player
+end
