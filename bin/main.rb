@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative "../lib/player"
+require_relative '../lib/player'
 
-puts "Welcome to a game of Tic-Tac-Toe!"
+puts 'Welcome to a game of Tic-Tac-Toe!'
 
 puts "Enter Player 1's name"
 player1 = gets.chomp
 
 while player1.nil? || player1.empty?
-  puts "Please enter your name"
+  puts 'Please enter your name'
   player1 = gets.chomp
 end
 
@@ -17,7 +17,7 @@ puts "Enter Player 2's name"
 player2 = gets.chomp
 
 while player2.nil? || player2.empty?
-  puts "Please enter your name"
+  puts 'Please enter your name'
   player2 = gets.chomp
 end
 
@@ -36,18 +36,18 @@ def display_board(board)
 end
 
 def play_again(player)
-  puts "Would you like to start again?"
-  puts "1. Yes"
-  puts "2. No"
+  puts 'Would you like to start again?'
+  puts '1. Yes'
+  puts '2. No'
   choice = gets.chomp.to_i
 
   case choice
-    when 1
-      player.start
-    when 2
-      exit
-    else
-      puts "Please enter a valid choice"
+  when 1
+    player.start
+  when 2
+    exit
+  else
+    puts 'Please enter a valid choice'
   end
 end
 

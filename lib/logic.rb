@@ -2,7 +2,7 @@
 
 class Game
   def initialize
-    @board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
+    @board = nil
     @counter = 0
     @box = 0
     @arr = 0
@@ -13,6 +13,7 @@ class Game
   def start
     @board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
     @game_on = true
+    @counter = 0
   end
 
   def receive_inputs(box, player) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
@@ -51,13 +52,13 @@ class Game
 
   def check_status
     winning_board = [[@board[0][0], @board[0][1], @board[0][2]],
-    [@board[1][0], @board[1][1], @board[1][2]],
-    [@board[2][0], @board[2][1], @board[2][2]],
-    [@board[0][0], @board[1][0], @board[2][0]],
-    [@board[0][1], @board[1][1], @board[2][1]],
-    [@board[0][2], @board[1][2], @board[2][2]],
-    [@board[0][0], @board[1][1], @board[2][2]],
-    [@board[0][2], @board[1][1], @board[2][0]]]
+                     [@board[1][0], @board[1][1], @board[1][2]],
+                     [@board[2][0], @board[2][1], @board[2][2]],
+                     [@board[0][0], @board[1][0], @board[2][0]],
+                     [@board[0][1], @board[1][1], @board[2][1]],
+                     [@board[0][2], @board[1][2], @board[2][2]],
+                     [@board[0][0], @board[1][1], @board[2][2]],
+                     [@board[0][2], @board[1][1], @board[2][0]]]
     winning_board.each do |sub|
       if sub.all? { |e| e == 'O' }
         @game_on = false
@@ -67,7 +68,7 @@ class Game
         @game_on = false
         @condition = { status: 'win', player: 1 }
         break
-      elsif @counter >= 9
+      elsif @counter > 9
         @game_on = false
         @condition = { status: 'draw', player: 0 }
         break
