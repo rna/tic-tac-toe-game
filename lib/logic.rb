@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
 class Game
-  attr_accessor :active_player
-  attr_reader :game_on, :board, :condition
   def initialize
     @board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
     @counter = 0
     @box = 0
     @arr = 0
     @game_on = false
-    @active_player = 1
     @condition = {}
   end
 
@@ -18,7 +15,7 @@ class Game
     @game_on = true
   end
 
-  def receive_inputs(box)
+  def receive_inputs(box, player) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     @box = box
     @arr = if box > 6
              2
@@ -34,8 +31,22 @@ class Game
     elsif (box == 3) || (box == 6) || (box == 9)
       cell = 2
     end
-    @board[@arr][cell] = @active_player.even? ? 'O' : 'X'
-    @counter += 1
+
+    if (@board[@arr][cell] == 'X') || (@board[@arr][cell] == 'O')
+      true
+    else
+      @board[@arr][cell] = player
+      @counter += 1
+      false
+    end
+  end
+
+  def check_input(box)
+    if box > 9 || box < 1
+      true
+    else
+      false
+    end
   end
 
   def check_status

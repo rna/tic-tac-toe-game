@@ -1,11 +1,28 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative "../lib/logic"
+require_relative "../lib/player"
 
-$game = Game.new
+puts "Welcome to a game of Tic-Tac-Toe!"
 
-$game.start
+puts "Enter Player 1's name"
+player1 = gets.chomp
+
+while player1.nil? || player1.empty?
+  puts "Please enter your name"
+  player1 = gets.chomp
+end
+
+puts "Enter Player 2's name"
+player2 = gets.chomp
+
+while player2.nil? || player2.empty?
+  puts "Please enter your name"
+  player2 = gets.chomp
+end
+
+player = Player.new(player1, player2)
+player.start
 
 def display_board(board)
   puts '----------------'
@@ -18,7 +35,7 @@ def display_board(board)
   puts '----------------'
 end
 
-def play_again
+def play_again(player)
   puts "Would you like to start again?"
   puts "1. Yes"
   puts "2. No"
@@ -26,7 +43,7 @@ def play_again
 
   case choice
     when 1
-      $game.start
+      player.start
     when 2
       exit
     else
@@ -34,28 +51,27 @@ def play_again
   end
 end
 
-while $game.game_on
-
-  display_board($game.board)
-  puts "Player-#{$game.active_player}: Please enter box number:-"
+while player.game_on
+  display_board(player.board)
+  puts "#{player.display_name}: Please enter box number:-"
   box = gets.chomp.to_i
-  $game.receive_inputs(box)
-  $game.check_status
 
-  if $game.condition[:status] == 'win'
-    display_board($game.board)
-    puts "Player #{$game.condition[:player]} wins"
-    play_again
-  elsif $game.condition[:status] == 'draw'
-    display_board($game.board)
-    puts 'Game is drawn'
-    play_again
+  while player.check_input(box)
+    puts "#{player.display_name}: Only enter a number from 1-9:-"
+    box = gets.chomp.to_i
   end
-  puts '----------------'
 
-  if $game.active_player.even?
-    $game.active_player -= 1
-  else
-    $game.active_player += 1
+  while player.receive_inputs(box)
+    puts "#{player.display_name}: Only choose an empty box:-"
+    box = gets.chomp.to_i
   end
+  player.check_status
+
+  if player.condition[:status] == 'win' || player.condition[:status] == 'draw'
+    display_board(player.board)
+    puts(player.message)
+    play_again(player)
+  end
+
+  player.switch_player
 end
