@@ -28,16 +28,15 @@ Tic-tac-toe (American English), noughts and crosses (British English), or Xs and
 
 ### Getting Started
 
-1. Download repo or clone the repo to your computer ```https://github.com/rna/tic-tac-toe-game.git```
+- Download repo or clone the repo to your computer ```https://github.com/rna/tic-tac-toe-game.git```
   <br/>
-2. Run the file in the terminal ```bin/main.rb```
-3. Enter each player name by its turn
-4. Game starts once enter your names
-5. As per the game rules, the first player will get `X ` and other player will get `O`.
-6. Players will take turns until the game concludes.
-7. You can start the game again or you can exit by selecting the required option.
-8. The player's marks (Xs and Os) will change once you restart the game.
-9. Happy gaming!!
+- Run the file in the terminal ```bin/main.rb```
+- Enter each player name by its turn
+- Game starts once enter your names
+- As per the game rules, the first player will get `X ` and other player will get `O`.
+- Players will take turns until the game concludes.- You can start the game again or you can exit by selecting the required option.
+- The player's marks (Xs and Os) will change once you restart the game.
+- Happy gaming!!
 
 ### Built With
 - Ruby 
