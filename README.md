@@ -6,6 +6,7 @@ Built a tic-tac-toe game on the command line where two human players can play ag
 - [About Game](#about-game)
 - [Getting Started](#getting-started)
 - [Built With](#built-with)
+- [Run Tests](#run-tests)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgements)
 
@@ -40,6 +41,12 @@ Tic-tac-toe (American English), noughts and crosses (British English), or Xs and
 
 ### Built With
 - Ruby 
+
+### Run tests
+
+```sh
+    rpsec --format documentation
+```
 
 ### Authors
 - [Ramesh Naidu Allu](https://github.com/rna)
